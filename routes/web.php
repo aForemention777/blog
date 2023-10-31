@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PostController;
+use App\Models\Post;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,10 +16,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// put the basic auth routes in
+Auth::routes();
+
 Route::get('/', function () {
-    return view('welcome');
+    $posts = Post::orderBy('published_at', 'desc')->get();
+
+    return view('welcome', [
+        'posts' => $posts,
+    ]);
 });
 
-Route::get('/about', function () {
-    echo '<h1> This is the about page </h1>';
-});
+Route::get('/post/{post}', [PostController::class, 'show'])->name('post.show');
+
+Route::get('/admin', [AdminController::class, 'index'])->name('admin.index')->middleware('auth');
+Route::post('/admin', [PostController::class, 'store'])->name('post.store')->middleware('auth');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

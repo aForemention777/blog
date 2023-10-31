@@ -25,24 +25,21 @@
 
     <!-- next, we want to do a foreach loop on $posts that was passed into this view -->
     <div class="post-container mt-5" style="min-width: 600px; max-width: 600px; width: 600px; margin: auto;">
-        @foreach ($posts as $post)
-            <div class="border border-2 mb-5 p-4 rounded">
-                <h1 class="text-center">{{ $post->title }}</h1>
-                <div class="d-flex justify-content-center">
-                    <!-- side by side: author name and publish date -->
-                    <p>By: {{ $post->author->name }}</p>
-                    <p>{{ $post->publish_date }}</p>
-                </div>
-
-                <!-- summary -->
-                <p>{{ $post->getSummary() }}</p>
-
-                <!-- read more button -->
-                <a href="/post/{{ $post->id }}"
-                    class="btn btn-outline-dark d-flex text-center justify-content-center" type="submit">Read
-                    More</a>
+        <div class="border border-2 mb-5 p-4 rounded">
+            <h1 class="text-center">{{ $post->title }}</h1>
+            <div class="d-flex justify-content-center">
+                <!-- side by side: author name and publish date -->
+                <p>By: {{ $post->author->name }}</p>
+                <p>{{ $post->publish_date }}</p>
             </div>
-        @endforeach
+
+            <!-- body -->
+            <p>{{ $post->body }}</p>
+
+            <!-- read more button -->
+            <a href="/" class="btn btn-outline-dark d-flex text-center justify-content-center" type="submit">Back
+                to Home ... </a>
+        </div>
     </div>
 </body>
 
